@@ -97,8 +97,9 @@ pnpm build
 ## :eyes: Usage
 
 > [!NOTE]
-> To get the manifest url of a document, you can go to the document page on
-> Bulac, click on the "IIIF" button below the document viewer.
+> Support both "ark:" links (recommended) and manifest ("iiif") links. To get
+> the manifest url of a document, you can go to the document page on Bulac,
+> click on the "IIIF" button below the document viewer.
 
 ```bash
 USAGE
@@ -118,13 +119,13 @@ FLAGS
   -v  --version                               Print version information and exit
 
 ARGUMENTS
-  args...  List of document urls to scrape from Bulac (e.g., "https://bina.bulac.fr/iiif/2/572900/manifest", "https://bina.bulac.fr/iiif/2/579892/manifest")
+  args...  List of document urls to scrape from Bulac (e.g., "https://bina.bulac.fr/s/bina/ark:/73193/bcrk5b", "https://bina.bulac.fr/iiif/2/579892/manifest")
 ```
 
 **Example**:
 
 ```bash
-pnpm build && ./dist/cli.mjs --outDir ./my-output --toPdf https://bina.bulac.fr/iiif/2/572900/manifest
+pnpm build && ./dist/cli.mjs --outDir ./my-output --toPdf https://bina.bulac.fr/s/bina/ark:/73193/bcrk5b https://bina.bulac.fr/iiif/2/572900/manifest
 
 pmpn build && ./dist/cli.mjs --outDir ./my-output --toPdf --ignoreCompleted --overwrite --fromFile ./document-urls.txt
 ```
