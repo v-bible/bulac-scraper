@@ -86,7 +86,25 @@ export default async function (
     try {
       let manifest = null
 
-      const manifestUrl = documentUrl
+      let manifestUrl = documentUrl
+
+      if (documentUrl.includes('ark:')) {
+        const htmlResponse = await retry(async () => {
+          const response = await fetch(documentUrl)
+          if (!response.ok) {
+            await delay(DELAY_BETWEEN_REQUESTS_MS)
+            throw new Error(`HTTP ${response.status} ${response.statusText}`)
+          }
+          return response.text()
+        }, MAX_RETRY_ATTEMPTS)
+
+        const dataIiifUrlMatch = htmlResponse.match(/data-iiif-url="([^"]+)"/)
+        manifestUrl = dataIiifUrlMatch?.[1] != null
+          ? dataIiifUrlMatch[1].replace(/&#x([0-9A-Fa-f]+);/g, (match, hex: string) => {
+              return String.fromCharCode(Number.parseInt(hex, 16))
+            })
+          : ''
+      }
 
       manifest = await retry(async () => {
         const response = await fetch(manifestUrl)
