@@ -1,7 +1,7 @@
 {
   "name": "@v-bible/bulac-scraper",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Digital Bulac Library Scraper",
   "author": "v-bible",
   "license": "CC-BY-NC-SA-4.0",

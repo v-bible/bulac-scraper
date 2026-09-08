@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/v-bible/bulac-scraper/compare/v1.0.0...v1.1.0) (2026-09-08)
+
+
+### Features
+
+* support ark links ([e110b04](https://github.com/v-bible/bulac-scraper/commit/e110b0476432deb9c2cd89eac0b59e907a0e430c))
+
 ## 1.0.0 (2026-09-04)
 
 
