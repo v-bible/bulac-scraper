@@ -9,7 +9,7 @@ const command = buildCommand({
       kind: 'array',
       parameter: {
         brief:
-          'List of document urls to scrape from Bulac (e.g., "https://bina.bulac.fr/iiif/2/572900/manifest", "https://bina.bulac.fr/iiif/2/579892/manifest")',
+          'List of document urls to scrape from Bulac (e.g., "https://bina.bulac.fr/s/bina/ark:/73193/bcrk5b", "https://bina.bulac.fr/iiif/2/579892/manifest")',
         parse: String,
       },
     },
@@ -52,7 +52,7 @@ const command = buildCommand({
 })
 
 export const app = buildApplication(command, {
-  name: 'bulac-scaper',
+  name: 'bulac-scraper',
   versionInfo: {
     currentVersion: version,
   },
