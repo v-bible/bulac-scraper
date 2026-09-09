@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/v-bible/bulac-scraper/compare/v1.1.0...v1.1.1) (2026-09-09)
+
+
+### Bug Fixes
+
+* app metadata ([23faee8](https://github.com/v-bible/bulac-scraper/commit/23faee829d58264a249988eb45e53a561148ee73))
+
 ## [1.1.0](https://github.com/v-bible/bulac-scraper/compare/v1.0.0...v1.1.0) (2026-09-08)
 
 
