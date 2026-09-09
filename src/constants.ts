@@ -5,3 +5,5 @@ export const DEFAULT_OVERWRITE = false
 
 export const DELAY_BETWEEN_REQUESTS_MS = 1000
 export const MAX_RETRY_ATTEMPTS = 500
+
+export const DEFAULT_IMAGE_HEIGHT = 982

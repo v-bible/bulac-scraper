@@ -9,6 +9,7 @@ import { delay, retry } from 'es-toolkit'
 import { PDFDocument } from 'pdf-lib'
 import {
   DEFAULT_IGNORE_COMPLETED,
+  DEFAULT_IMAGE_HEIGHT,
   DEFAULT_OVERWRITE,
   DEFAULT_TO_PDF,
   DELAY_BETWEEN_REQUESTS_MS,
@@ -19,6 +20,8 @@ import { logger } from '@/logger/logger'
 
 type CommandFlags = {
   outDir?: string
+  height?: number
+  width?: number
   toPdf?: boolean
   ignoreCompleted?: boolean
   overwrite?: boolean
@@ -147,10 +150,7 @@ export default async function (
         (item: any, idx: number) => {
           const imageId = item.images[0]['@id'].split('/').pop()
           const downloadUrl = item.images[0].resource['@id']
-            .replace(
-              '623,800',
-              '982,',
-            )
+            .replace(/\/full\/[^/]+(?=\/)/, `/full/${flags?.height !== undefined ? flags.height : DEFAULT_IMAGE_HEIGHT},${flags?.width !== undefined ? flags.width : ''}`)
 
           const name = `[${idx + 1}]_${imageId}.jpeg`
 
