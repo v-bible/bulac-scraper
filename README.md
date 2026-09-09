@@ -130,12 +130,101 @@ pnpm build && ./dist/cli.mjs --outDir ./my-output --toPdf https://bina.bulac.fr/
 pmpn build && ./dist/cli.mjs --outDir ./my-output --toPdf --ignoreCompleted --overwrite --fromFile ./document-urls.txt
 ```
 
+## Crawl URL from Bulac category
+
+A small script is provided to crawl all document urls from a given Bulac
+category page. You can run it as follows, requires
+[`uv`](https://docs.astral.sh/uv/) tool to be installed:
+
+```python
+# scraper.py
+# /// script
+# dependencies = [
+#   "beautifulsoup4",
+#   "requests",
+# ]
+# ///
+
+import time
+from urllib.parse import urljoin
+import requests
+from bs4 import BeautifulSoup
+
+
+def scrape_bina_ark_urls(start_url):
+    session = requests.Session()
+    session.headers.update(
+        {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0.0.0 Safari/537.36"
+            )
+        }
+    )
+
+    current_url = start_url
+    ark_urls = set()
+    page = 1
+
+    while current_url:
+        print(f"Scraping page {page}: {current_url}")
+        response = session.get(current_url)
+
+        if response.status_code != 200:
+            print(f"Failed to fetch page {page}. Status: {response.status_code}")
+            break
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Extract links containing the ARK identifier pattern ('ark:/')
+        for a_tag in soup.find_all("a", href=True):
+            href = a_tag["href"]
+            if "ark:/" in href:
+                full_url = urljoin(current_url, href)
+                # Strip query strings and fragment identifiers
+                clean_url = full_url.split("?")[0].split("#")[0]
+                ark_urls.add(clean_url)
+
+        # Locate pagination "Next" link
+        next_link = soup.find("a", attrs={"rel": "next"}) or soup.find(
+            "a", class_=lambda c: c and "next" in c.split()
+        )
+
+        if next_link and next_link.get("href"):
+            next_href = next_link["href"]
+            current_url = urljoin(current_url, next_href)
+            page += 1
+            time.sleep(1)
+        else:
+            print("No next page link found. Pagination complete.")
+            current_url = None
+
+    return list(ark_urls)
+
+
+if __name__ == "__main__":
+    target_url = (
+        "https://bina.bulac.fr/s/bina/item?Search=&property%5B0%5D%5Bproperty%5D=51&property%5B0%5D%5Btype%5D=eq&property%5B0%5D%5Btext%5D=https://www.idref.fr/029517486"
+    )
+
+    extracted_links = scrape_bina_ark_urls(target_url)
+
+    print(f"\nSuccessfully collected {len(extracted_links)} ARK URLs:")
+    for link in extracted_links:
+        print(link)
+```
+
+```bash
+uv run ./scraper.py
+```
+
 <!-- Contributing -->
 
 ## :wave: Contributing
 
-<a href="https://github.com/v-bible/bulac-scaper/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=v-bible/bulac-scaper" alt="contributors" />
+<a href="https://github.com/v-bible/bulac-scraper/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=v-bible/bulac-scraper" alt="contributors" />
 </a>
 
 Contributions are always welcome!
@@ -166,4 +255,4 @@ Duong Vinh - [@duckymomo20012](https://twitter.com/duckymomo20012) -
 tienvinh.duong4@gmail.com
 
 Project Link:
-[https://github.com/v-bible/bulac-scaper](https://github.com/v-bible/bulac-scaper).
+[https://github.com/v-bible/bulac-scraper](https://github.com/v-bible/bulac-scraper).
