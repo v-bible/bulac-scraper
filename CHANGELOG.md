@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/v-bible/bulac-scraper/compare/v1.1.1...v1.2.0) (2026-09-09)
+
+
+### Features
+
+* support image height and width ([7988f71](https://github.com/v-bible/bulac-scraper/commit/7988f71a5adbed31896de81278073e75afedefa3))
+
 ## [1.1.1](https://github.com/v-bible/bulac-scraper/compare/v1.1.0...v1.1.1) (2026-09-09)
 
 
