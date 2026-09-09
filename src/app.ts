@@ -1,6 +1,6 @@
-import { buildApplication, buildCommand } from '@stricli/core'
+import { buildApplication, buildCommand, numberParser } from '@stricli/core'
 import { description, version } from '@/../package.json'
-import { OUTPUT_BASE_DIR } from '@/constants'
+import { DEFAULT_IMAGE_HEIGHT, OUTPUT_BASE_DIR } from '@/constants'
 
 const command = buildCommand({
   loader: async () => import('./impl'),
@@ -18,6 +18,18 @@ const command = buildCommand({
         kind: 'parsed',
         brief: `Output directory. Default to "${OUTPUT_BASE_DIR}/<document-name>"`,
         parse: String,
+        optional: true,
+      },
+      height: {
+        kind: 'parsed',
+        brief: `Image height. Default to ${DEFAULT_IMAGE_HEIGHT} pixels`,
+        parse: numberParser,
+        optional: true,
+      },
+      width: {
+        kind: 'parsed',
+        brief: 'Image width',
+        parse: numberParser,
         optional: true,
       },
       toPdf: {

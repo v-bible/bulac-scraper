@@ -103,7 +103,7 @@ pnpm build
 
 ```bash
 USAGE
-  bulac-scraper [--outDir value] [--toPdf] [--ignoreCompleted] [--overwrite] [--fromFile value] <args>...
+  bulac-scraper [--outDir value] [--height value] [--width value] [--toPdf] [--ignoreCompleted] [--overwrite] [--fromFile value] <args>...
   bulac-scraper --help
   bulac-scraper --version
 
@@ -111,6 +111,8 @@ Digital Bulac Library Scraper
 
 FLAGS
      [--outDir]                               Output directory. Default to "./output/<document-name>"
+     [--height]                               Image height. Default to 982 pixels
+     [--width]                                Image width
      [--toPdf/--noToPdf]                      Convert downloaded images to a single PDF file
      [--ignoreCompleted/--noIgnoreCompleted]  Skip downloading if all images already exist in the output directory, or PDF already exists if --toPdf is set
      [--overwrite/--noOverwrite]              Overwrite existing files if they already exist in the output directory
@@ -121,6 +123,13 @@ FLAGS
 ARGUMENTS
   args...  List of document urls to scrape from Bulac (e.g., "https://bina.bulac.fr/s/bina/ark:/73193/bcrk5b", "https://bina.bulac.fr/iiif/2/579892/manifest")
 ```
+
+> [!NOTE]
+> For image size, you should only specify either height or width, but not both.
+> This is because the images are served in a way that maintains their aspect
+> ratio. If you specify both height and width, the images may be distorted. If
+> you want to specify both, make sure you know the original aspect ratio of the
+> images.
 
 **Example**:
 
